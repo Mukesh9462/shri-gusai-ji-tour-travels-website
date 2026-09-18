@@ -1,0 +1,6 @@
+import { Phone, MessageCircle, MapPin } from "lucide-react";
+import SEO from "../components/SEO";
+import { business } from "../data/business";
+import { useLanguage } from "../context/LanguageContext";
+export default function Contact() { const { lang, t } = useLanguage(); return <><SEO title="Contact Shri Gursai Ji Tour & Travels | Bikaner" description="श्री गुसांई जी टूर & ट्रैवल्स, बीकानेर से फोन या WhatsApp पर संपर्क करें।" path="/contact" /><section className="page-hero"><div className="container"><div className="eyebrow">{t.contact.eyebrow}</div><h1>{t.contact.title} <span>{t.contact.accent}</span></h1></div></section><section className="section"><div className="container contact-grid"><Card icon={<Phone />} label={lang === "hi" ? "फोन" : "Phone"}><a href={`tel:${business.phoneTel}`}>{business.phoneDisplay}</a></Card><Card icon={<MessageCircle />} label="WhatsApp"><a href={business.whatsappBase} target="_blank" rel="noopener noreferrer">{lang === "hi" ? "WhatsApp पर संदेश भेजें" : "Send WhatsApp Message"}</a></Card><Card icon={<MapPin />} label={lang === "hi" ? "स्थान" : "Location"}><strong>{business.cityHi}, {business.state}</strong></Card></div></section></>; }
+function Card({ icon, label, children }) { return <div className="contact-card"><div className="contact-icon">{icon}</div><small>{label}</small>{children}</div>; }
