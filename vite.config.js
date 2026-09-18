@@ -24,6 +24,6 @@ function seoFiles(siteUrl) {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
-  const siteUrl = env.VITE_SITE_URL || "http://localhost:4173";
+  const siteUrl = env.VITE_SITE_URL || "https://easytravelbikaner.app";
   return { plugins: [react(), seoFiles(siteUrl)] };
 });

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-export const SITE_URL = import.meta.env.VITE_SITE_URL || (typeof window !== "undefined" ? window.location.origin : "");
+export const SITE_URL = (import.meta.env.VITE_SITE_URL || "https://easytravelbikaner.app").replace(/\/$/, "");
 export default function SEO({ title, description, path = "/" }) {
   useEffect(() => {
     document.title = title;
-    const url = SITE_URL ? `${SITE_URL}${path}` : path;
+    const url = `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
     document.querySelector('meta[name="description"]')?.setAttribute("content", description);
     let canonical = document.querySelector('link[rel="canonical"]');
     if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.appendChild(canonical); }
