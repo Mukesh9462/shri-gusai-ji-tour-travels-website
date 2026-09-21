@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
 import ServiceCard from "../components/ServiceCard";
 import VehicleFleetSection from "../components/VehicleFleetSection";
+import FAQ from "../components/FAQ";
 import { services } from "../data/services";
 import { vehicles } from "../data/vehicles";
-import { tours } from "../data/tours";
 import { business, buildWhatsAppLink } from "../data/business";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -103,6 +103,7 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
+			<FAQ />
 			<section className="home-contact-cta">
 				<div className="container">
 					<div>
