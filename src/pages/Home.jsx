@@ -1,4 +1,4 @@
-import { ArrowRight, Car, Heart, MapPin, MessageCircle, Phone, ShieldCheck, Users } from "lucide-react";
+import { ArrowRight, Car, Heart, MapPin, MessageCircle, Phone, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
 import ServiceCard from "../components/ServiceCard";
@@ -8,6 +8,15 @@ import { vehicles } from "../data/vehicles";
 import { tours } from "../data/tours";
 import { business, buildWhatsAppLink } from "../data/business";
 import { useLanguage } from "../context/LanguageContext";
+
+const featuredTours = [
+	{ titleHi: "बीकानेर दर्शन", titleEn: "Bikaner Sightseeing" },
+	{ titleHi: "जैसलमेर", titleEn: "Jaisalmer" },
+	{ titleHi: "जोधपुर", titleEn: "Jodhpur" },
+	{ titleHi: "जयपुर", titleEn: "Jaipur" },
+	{ titleHi: "राजस्थान टूर", titleEn: "Rajasthan Tour" }
+];
+
 export default function Home() {
 	const { lang, t } = useLanguage();
 	const heroMessage = "नमस्ते, मुझे इनोवा, इटियोस और अन्य वाहन किराये के बारे में जानकारी चाहिए।";
@@ -18,10 +27,10 @@ export default function Home() {
 				<div className="container brand-hero-grid">
 					<div className="brand-hero-copy">
 						<div className="eyebrow">{t.hero.eyebrow}</div>
-						<h1>{lang === "hi" ? <>विवाह-शादी व टूर<br />प्रोग्रामों में<br /><span>इनोवा, इटियोस किराये पर</span></> : <>{t.hero.title1}<br /><span>{t.hero.title2}</span></>}</h1>
-						<p>{t.hero.description}</p>
+						<h1>{lang === "hi" ? <>बीकानेर से हर सफ़र,<br /><span>यादगार सफ़र।</span></> : <>Every journey from Bikaner,<br /><span>worth remembering.</span></>}</h1>
+						<p>{lang === "hi" ? "शादी-विवाह, टूर प्रोग्राम, लोकल एवं आउटस्टेशन यात्रा के लिए वाहन सेवा।" : t.hero.description}</p>
 						<div className="hero-buttons">
-							<a href={`tel:${business.phoneTel}`} className="btn btn-primary btn-large"><Phone size={18} />{business.phoneDisplay} {lang === "hi" ? "अभी कॉल करें" : "Call Now"}</a>
+							<a href={`tel:${business.phoneTel}`} className="btn btn-primary btn-large"><Phone size={18} />{lang === "hi" ? `${business.phoneDisplay} पर कॉल करें` : `Call ${business.phoneDisplay}`}</a>
 							<a href={buildWhatsAppLink(heroMessage)} target="_blank" rel="noopener noreferrer" className="btn btn-light btn-large"><MessageCircle size={18} />WhatsApp करें</a>
 						</div>
 					</div>
@@ -37,8 +46,17 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
+			<section className="quick-booking" aria-label={lang === "hi" ? "त्वरित बुकिंग" : "Quick booking"}>
+				<div className="container quick-booking-inner">
+					<div className="quick-field"><small>{lang === "hi" ? "कहाँ से" : "From"}</small><strong>{business.cityHi}</strong></div>
+					<div className="quick-field"><small>{lang === "hi" ? "कहाँ तक" : "To"}</small><strong>{lang === "hi" ? "गंतव्य बताएं" : "Choose destination"}</strong></div>
+					<div className="quick-field"><small>{lang === "hi" ? "यात्रा की तारीख" : "Travel date"}</small><strong>{lang === "hi" ? "तारीख बताएं" : "Share your date"}</strong></div>
+					<div className="quick-field"><small>{lang === "hi" ? "गाड़ी" : "Vehicle"}</small><strong>{lang === "hi" ? "वाहन चुनें" : "Choose vehicle"}</strong></div>
+					<Link to="/booking" className="btn btn-primary">{lang === "hi" ? "किराया पूछें" : "Ask for fare"}<ArrowRight size={17} /></Link>
+				</div>
+			</section>
 			<section className="quick-services">
-				<div className="container quick-service-grid">{services.slice(0, 4).map(service => <ServiceCard key={service.id} service={service} />)}</div>
+				<div className="container"><div className="home-section-intro"><div className="eyebrow">हमारी सेवाएं</div><h2>आपके हर सफ़र के लिए</h2><p>शादी से लेकर आउटस्टेशन यात्रा तक, आपकी जरूरत के अनुसार वाहन सेवा।</p></div><div className="quick-service-grid">{services.map(service => <ServiceCard key={service.id} service={service} />)}</div></div>
 			</section>
 			<section className="section home-fleet-section">
 				<div className="container">
@@ -51,7 +69,7 @@ export default function Home() {
 					<div>
 						<div className="eyebrow">शादी-विवाह</div>
 						<h2>शादी-विवाह के लिए वाहन व्यवस्था</h2>
-						<p>बारात, परिवार एवं मेहमानों के लिए आवश्यकता अनुसार वाहनों की व्यवस्था की जा सकती है।</p>
+						<p>बारात, दूल्हा-दुल्हन, परिवार और मेहमानों के लिए आवश्यकता एवं उपलब्धता के अनुसार वाहन व्यवस्था।</p>
 						<div className="feature-tags"><span><Heart size={17} />बारात</span><span><Users size={17} />दुल्हा-दुल्हन</span><span><Car size={17} />वाहन व्यवस्था</span></div>
 						<Link to="/wedding" className="btn btn-primary">शादी के लिए वाहन पूछें <ArrowRight size={17} /></Link>
 					</div>
@@ -60,8 +78,8 @@ export default function Home() {
 			</section>
 			<section className="section home-tours">
 				<div className="container">
-					<SectionHeading eyebrow="राजस्थान टूर एवं यात्रा" title="अपनी यात्रा की योजना बनाएं" description="कस्टम यात्रा योजना के लिए संपर्क करें।" />
-					<div className="home-tour-grid">{tours.slice(0, 7).map(tour => <article key={tour.id}><MapPin size={19} /><h3>{lang === "hi" ? tour.titleHi : tour.titleEn}</h3><p>{lang === "hi" ? "कस्टम यात्रा योजना के लिए संपर्क करें।" : "Contact us for a custom travel plan."}</p></article>)}</div>
+					<SectionHeading eyebrow="राजस्थान टूर एवं यात्रा" title="बीकानेर से राजस्थान घूमने का प्लान बनाएं" description="अपनी यात्रा के अनुसार योजना और वाहन उपलब्धता के लिए संपर्क करें।" action={<Link to="/tours" className="text-link">टूर प्लान पूछें <ArrowRight size={17} /></Link>} />
+					<div className="home-tour-grid">{featuredTours.map(tour => <article key={tour.titleEn}><MapPin size={19} /><h3>{lang === "hi" ? tour.titleHi : tour.titleEn}</h3><p>{lang === "hi" ? "अपनी यात्रा के अनुसार योजना और वाहन उपलब्धता के लिए संपर्क करें।" : "Contact us for a travel plan and vehicle availability."}</p></article>)}</div>
 				</div>
 			</section>
 			<section className="group-travel">
@@ -76,11 +94,12 @@ export default function Home() {
 			</section>
 			<section className="trust-section">
 				<div className="container">
-					<SectionHeading eyebrow="हमसे संपर्क करें" title="स्थानीय सेवा, सीधा संपर्क" description="आपकी तारीख और आवश्यकता के अनुसार वाहन व्यवस्था के लिए बात करें।" />
+					<SectionHeading eyebrow="हमसे संपर्क करें" title="क्यों चुनें गुसांई जी टूर & ट्रैवल्स?" description="आपकी तारीख और आवश्यकता के अनुसार वाहन व्यवस्था के लिए बात करें।" />
 					<div className="trust-grid">
-						<div><ShieldCheck /><strong>सीधा संपर्क</strong><span>फोन और WhatsApp पर जानकारी</span></div>
-						<div><MapPin /><strong>बीकानेर से सेवा</strong><span>स्थानीय और आउटस्टेशन यात्रा</span></div>
-						<div><Car /><strong>उपलब्धता पूछें</strong><span>आपकी जरूरत के अनुसार वाहन</span></div>
+						<div><Car /><strong>विभिन्न वाहन विकल्प</strong><span>छोटी कार से लेकर ग्रुप यात्रा तक उपलब्ध विकल्प।</span></div>
+						<div><Heart /><strong>शादी-विवाह वाहन व्यवस्था</strong><span>बारात, परिवार एवं मेहमानों के लिए वाहन व्यवस्था।</span></div>
+						<div><MapPin /><strong>बीकानेर से यात्रा सेवा</strong><span>लोकल एवं आउटस्टेशन यात्रा के लिए संपर्क करें।</span></div>
+						<div><Phone /><strong>सीधा संपर्क</strong><span>वाहन उपलब्धता और यात्रा योजना के लिए सीधे संपर्क करें।</span></div>
 					</div>
 				</div>
 			</section>
@@ -88,10 +107,11 @@ export default function Home() {
 				<div className="container">
 					<div>
 						<div className="eyebrow">आज ही बात करें</div>
-						<h2>अपनी यात्रा के लिए संपर्क करें</h2>
+						<h2>अपनी अगली यात्रा की योजना बनाएं</h2>
+						<p>वाहन उपलब्धता और यात्रा संबंधी जानकारी के लिए सीधे संपर्क करें।</p>
 					</div>
 					<div className="cta-buttons">
-						<a href={`tel:${business.phoneTel}`} className="btn btn-white"><Phone size={18} />{business.phoneDisplay}</a>
+						<a href={`tel:${business.phoneTel}`} className="btn btn-white"><Phone size={18} />कॉल करें</a>
 						<a href={business.whatsappBase} target="_blank" rel="noopener noreferrer" className="btn btn-light"><MessageCircle size={18} />WhatsApp करें</a>
 					</div>
 				</div>
